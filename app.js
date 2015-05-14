@@ -26,6 +26,10 @@ io.on('connection', function(socket){
     console.log('message: ' + msg);
     socket.emit('test message', 'I am a socket.io message from the server!');
   });
+  socket.on('slider change', function (msg) {
+    console.log(msg);
+    socket.broadcast.emit('slider change', msg);
+  })
 });
 
 // view engine setup

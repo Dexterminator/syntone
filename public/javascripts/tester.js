@@ -4,11 +4,6 @@ $(document).ready(function() {
 	lodashTest.append('Calculated by lodash: ');
 	_.map([1, 2, 3], function(n) {lodashTest.append((n * 3) + ' ')});
 
-	var socket = io();
-	socket.emit('test message', 'testing, testing');
-	socket.on('test message', function (message) {
-		$('#io-message').append(message);
-	});
 
 	var patch;
   $.get('pd/dynamic_sequencer_example.pd', function(example) {
@@ -24,4 +19,28 @@ $(document).ready(function() {
 	    });
 	  });
   });
+
+  var slider = $('#slider');
+  slider.slider({
+  	orientation: "horizontal",
+  	range: "min",
+  	max: 200,
+    value: 0,
+  });
+
+	var socket = io();
+	socket.emit('test message', 'testing, testing');
+	socket.on('test message', function (message) {
+		$('#io-message').append(message);
+	});
+	socket.on('slider change', function (message) {
+		console.log('got slider change message: ', message);
+		slider.slider('value', message);
+	});
+
+	slider.on('slide', function (event, ui) {
+		console.log('slide change', ui.value);
+		socket.emit('slider change', ui.value);
+	});
+
 });

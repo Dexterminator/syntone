@@ -6,10 +6,10 @@ $(document).ready(function() {
 
 
 	var patch;
-  $.get('pd/dynamic_sequencer_example.pd', function(example) {
-  	$.get('pd/dynamic_sequencer2.pd', function(dynamicSequencer) {
+  $.get('pd/Syntone.pd', function(example) {
+  	$.get('pd/SyntoneLead.pd', function(syntone) {
 	    // Loading the patch and abstraction
-	    Pd.registerAbstraction('dynamic_sequencer2', dynamicSequencer);
+	    Pd.registerAbstraction('SyntoneLead', syntone);
 	    patch = Pd.loadPatch(example);
 	    $('#pd-starter').click(function(event) {
 		    Pd.start();
@@ -24,7 +24,7 @@ $(document).ready(function() {
   slider.slider({
   	orientation: "horizontal",
   	range: "min",
-  	max: 200,
+  	max: 127,
     value: 0,
   });
 
@@ -41,6 +41,7 @@ $(document).ready(function() {
 	slider.on('slide', function (event, ui) {
 		console.log('slide change', ui.value);
 		socket.emit('slider change', ui.value);
+		Pd.send('lp1', [parseFloat(ui.value)]);
 	});
 
 });

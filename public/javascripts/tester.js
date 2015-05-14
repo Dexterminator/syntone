@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
 	$('#jquery-test').append('I was appended by jQuery!');
 	var lodashTest = $('#lodash-test');
 	lodashTest.append('Calculated by lodash: ');

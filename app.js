@@ -11,26 +11,11 @@ var users = require('./routes/users');
 var socketio = require('socket.io');
 var app = express();
 var io = socketio();
-var _ = require('lodash')
+var _ = require('lodash');
+var socketController = require('./communication/socket-controller');
 app.io = io;
 
-var reduced = _.reduce([1, 2, 3 , 4, 5], function(total, n) {
-  return total + n;
-});
-
-console.log(reduced);
-
-io.on('connection', function(socket){
-  console.log('user connected');
-  socket.on('test message', function(msg){
-    console.log('message: ' + msg);
-    socket.emit('test message', 'I am a socket.io message from the server!');
-  });
-  socket.on('slider change', function (msg) {
-    console.log(msg);
-    socket.broadcast.emit('slider change', msg);
-  })
-});
+socketController.init(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

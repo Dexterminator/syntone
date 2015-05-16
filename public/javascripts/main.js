@@ -1,3 +1,3 @@
 $(function() {
-	$('p').append('<br>Hello World!')
+  $('p').append('<br>Hello World!')
 });

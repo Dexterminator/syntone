@@ -15,8 +15,8 @@ function loadPdPatch() {
   });
 }
 
-function initSlider() {
-  var slider = $('#slider');
+function initSlider(param) {
+  var slider = $('#' + param);
   slider.slider({
     orientation: "horizontal",
     range: "min",
@@ -26,22 +26,25 @@ function initSlider() {
   return slider;
 }
 
-function setSliderCallbacks(slider) {
+function setSliderCallbacks(slider, param) {
   var socket = io();
-  socket.on('slider change', function (message) {
+  socket.on(param, function (message) {
     console.log('got slider change message: ', message);
     slider.slider('value', message);
   });
 
   slider.on('slide', function (event, ui) {
-    console.log('slide change', ui.value);
-    socket.emit('slider change', ui.value);
-    Pd.send('lp1', [parseFloat(ui.value)]);
+    console.log(param + ': ' + ui.value);
+    socket.emit(param, ui.value);
+    Pd.send(param, [parseFloat(ui.value)]);
   });
 }
 
 $(function() {
+  var params = ['lp1', 'lp2', 'bp1', 'bp2'];
   loadPdPatch();
-  var slider = initSlider();
-  setSliderCallbacks(slider);
+  _.forEach(params, function (param) {
+    var slider = initSlider(param);
+    setSliderCallbacks(slider, param);
+  });
 });

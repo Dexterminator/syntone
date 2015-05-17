@@ -17,8 +17,20 @@ var drumsParams = [
   'dp1', 'dp2', 'dp3', 'dp4',
   'dp5', 'dp6', 'dp7', 'dp8'
 ];
-
 var roomStates = [];
+
+module.exports.init = function(io) {
+  io.on('connection', function(socket){
+    connected++;
+    console.log('User connected. ' + connected + ' users now connected.');
+    var room = assignRoom(io, socket);
+    var roomState = roomStates[room] || initRoomState(room);
+    console.log(roomStates[room]);
+    socketCallbacks.setParameterCallbacks(socket, roomState, 'lead', leadParams);
+    socketCallbacks.setParameterCallbacks(socket, roomState, 'bass', bassParams);
+    socketCallbacks.setParameterCallbacks(socket, roomState, 'drums', drumsParams);
+  });
+};
 
 function initRoomState(room) {
   var roomState = {
@@ -39,19 +51,6 @@ function initRoomState(room) {
   roomStates[room] = roomState;
   return roomState;
 }
-
-module.exports.init = function(io) {
-  io.on('connection', function(socket){
-    connected++;
-    console.log('User connected. ' + connected + ' users now connected.');
-    var room = assignRoom(io, socket);
-    var roomState = roomStates[room] || initRoomState(room);
-    console.log(roomStates[room]);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'lead', leadParams);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'bass', bassParams);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'drums', drumsParams);
-  });
-};
 
 function assignRoom (io, socket) {
   var room = _.find(rooms, function (room) {

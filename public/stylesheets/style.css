@@ -6,3 +6,7 @@ body {
 a {
   color: #00B7FF;
 }
+
+.app-header {
+    font-size: 80px;
+}

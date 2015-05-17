@@ -20,10 +20,6 @@ function setCallbacks (socket) {
     console.log('user disconnected')
   });
 
-  socket.on('test message', function (message) {
-    onTestMessage(socket, message);
-  });
-
   socket.on('slider change', function (message) {
     onSliderChange(socket, message);
   });
@@ -53,11 +49,6 @@ function roomSockets(io, roomId) {
     sockets.push(io.sockets.connected[clientId]);
   }
   return sockets;
-}
-
-function onTestMessage(socket, message) {
-  console.log('test message from socket ' + socket.id + ' in room ' + socket.room + ': ' + message);
-  socket.emit('test message', 'I am a socket.io message from the server!');
 }
 
 function onSliderChange (socket, message) {

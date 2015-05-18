@@ -41,7 +41,7 @@ function setSliderCallbacks(slider, param) {
 }
 
 $(function() {
-  var params = ['lp1', 'lp2', 'bp1', 'bp2'];
+  var params = ['lp1', 'lp2', 'bp1', 'bp2', 'dp1', 'dp2'];
   loadPdPatch();
   _.forEach(params, function (param) {
     var slider = initSlider(param);

@@ -26,8 +26,7 @@ function initSlider(param) {
   return slider;
 }
 
-function setSliderCallbacks(slider, param) {
-  var socket = io();
+function setSliderCallbacks(slider, param, socket) {
   socket.on(param, function (message) {
     console.log('got slider change message: ', message);
     slider.slider('value', message);
@@ -40,11 +39,37 @@ function setSliderCallbacks(slider, param) {
   });
 }
 
+function setConnectionEvents(socket) {
+  var bandMembers = $('#band-members');
+  socket.on('joined', function (message) {
+    var bandMember = $('<li/>').append(message).hide();
+    bandMembers.append(bandMember);
+    bandMember.slideDown('slow');
+    console.log(bandMembers.find('li'));
+    _.forEach(bandMembers.find('li'), function (member) {
+      console.log($(member).html());
+    });
+  });
+
+  socket.on('left', function (message) {
+    var memberElems = bandMembers.find('li');
+    var left = $(_.find(memberElems, function (memberElem) {
+      return $(memberElem).html() === message;
+    }));
+    left.slideUp('slow', function () {
+      left.remove();
+    });
+  });
+}
+
 $(function() {
   var params = ['lp1', 'lp2', 'bp1', 'bp2', 'dp1', 'dp2'];
+  var socket = io();
   loadPdPatch();
   _.forEach(params, function (param) {
     var slider = initSlider(param);
-    setSliderCallbacks(slider, param);
+    setSliderCallbacks(slider, param, socket);
   });
+
+  setConnectionEvents(socket);
 });

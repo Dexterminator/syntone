@@ -1,12 +1,7 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
-
 .app-header {
     font-size: 80px;
+}
+
+.info-area {
+    height: 150px;
 }

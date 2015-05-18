@@ -1,5 +1,4 @@
 var _ = require('lodash');
-var socketCallbacks = require('./socket-callbacks');
 
 var connected = 0;
 var rooms = ['0'];
@@ -26,11 +25,34 @@ module.exports.init = function(io) {
     var room = assignRoom(io, socket);
     var roomState = roomStates[room] || initRoomState(room);
     syncRoomParams(room, socket);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'lead', leadParams);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'bass', bassParams);
-    socketCallbacks.setParameterCallbacks(socket, roomState, 'drums', drumsParams);
+    setParameterCallbacks(socket, roomState, 'bass', bassParams);
+    setParameterCallbacks(socket, roomState, 'lead', leadParams);
+    setParameterCallbacks(socket, roomState, 'drums', drumsParams);
+    setRoomConnectionEvents(io, room, socket);
   });
 };
+
+function setParameterCallbacks (socket, roomState, instrument, paramList) {
+  _.forEach(paramList, function (param) {
+    socket.on(param, function (message) {
+      var value = parseInt(message);
+      var lastValue = roomState[instrument][param];
+      roomState[instrument][param] = value;
+      socket.to(socket.room).emit(param, message);
+      console.log('Room ' + socket.room + ': ' + param + ': ' + lastValue + ' -> ' + value);
+    });
+  });
+}
+
+function setRoomConnectionEvents(io, room, socket) {
+  _.forEach(roomSockets(io, room), function (roomSocket) {
+    socket.emit('joined', roomSocket.id);
+  });
+  socket.to(socket.room).emit('joined', socket.id);
+  socket.on('disconnect', function () {
+    io.sockets.to(room).emit('left', socket.id);
+  });
+}
 
 function syncRoomParams(room, socket) {
   _.forIn(roomStates[room], function (obj) {
@@ -84,9 +106,9 @@ function assignRoom (io, socket) {
 function roomSockets(io, roomId) {
   var clients = io.sockets.adapter.rooms[roomId];
   var sockets = [];
-  _.forIn(clients, function (clientId) {
+  for (var clientId in clients) {
     sockets.push(io.sockets.connected[clientId]);
-  });
+  }
 
   return sockets;
 }

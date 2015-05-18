@@ -45,10 +45,6 @@ function setConnectionEvents(socket) {
     var bandMember = $('<li/>').append(message).hide();
     bandMembers.append(bandMember);
     bandMember.slideDown('slow');
-    console.log(bandMembers.find('li'));
-    _.forEach(bandMembers.find('li'), function (member) {
-      console.log($(member).html());
-    });
   });
 
   socket.on('left', function (message) {

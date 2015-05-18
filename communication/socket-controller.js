@@ -19,7 +19,7 @@ var drumsParams = [
 var roomStates = [];
 
 module.exports.init = function(io) {
-  io.on('connection', function(socket){
+  io.on('connection', function(socket) {
     connected++;
     console.log('User connected. ' + connected + ' users now connected.');
     var room = assignRoom(io, socket);

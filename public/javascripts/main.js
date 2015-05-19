@@ -39,10 +39,16 @@ function setSliderCallbacks(slider, param, socket) {
   });
 }
 
-function setConnectionEvents(socket) {
+function setConnectionEvents(socket, bandMemberColors) {
   var bandMembers = $('#band-members');
   socket.on('joined', function (message) {
-    var bandMember = $('<li/>').append(message).hide();
+    var colorIndex = _.random(0, bandMemberColors.length - 1);
+    var color = bandMemberColors[colorIndex];
+    bandMemberColors.splice(colorIndex, 1);
+    var bandMember = $('<li/>')
+      .append(message)
+      .css('color', color)
+      .hide();
     bandMembers.append(bandMember);
     bandMember.slideDown('slow');
   });
@@ -52,6 +58,8 @@ function setConnectionEvents(socket) {
     var left = $(_.find(memberElems, function (memberElem) {
       return $(memberElem).html() === message;
     }));
+
+    bandMemberColors.push(left.css('color'));
     left.slideUp('slow', function () {
       left.remove();
     });
@@ -59,6 +67,7 @@ function setConnectionEvents(socket) {
 }
 
 $(function() {
+  var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var params = ['lp1', 'lp2', 'bp1', 'bp2', 'dp1', 'dp2'];
   var socket = io();
   loadPdPatch();
@@ -67,5 +76,5 @@ $(function() {
     setSliderCallbacks(slider, param, socket);
   });
 
-  setConnectionEvents(socket);
+  setConnectionEvents(socket, bandMemberColors);
 });

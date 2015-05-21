@@ -41,6 +41,7 @@
 .piano {
     width: 500px;
     margin: 20px auto;
+    cursor: pointer;
 }
 
 .key {
@@ -58,7 +59,6 @@
     border-radius: 5px;
     position: absolute;
     left: 49px;
-    border: 1px solid;
     top: 9px;
 }
 
@@ -67,7 +67,12 @@
     background-color: #5b5656;
 }
 
-.blackKey:active {
+.black-active-key {
+    transition: none;
+    background-color: #aea1a1;
+}
+
+.black-active-key:hover {
     transition: none;
     background-color: #aea1a1;
 }
@@ -86,7 +91,12 @@
     background: #9e9d9e;
 }
 
-.whiteKey:active {
+.white-active-key {
+    transition: none;
+    background: #676667;
+}
+
+.white-active-key:hover {
     transition: none;
     background: #676667;
 }

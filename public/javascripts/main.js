@@ -71,14 +71,14 @@ $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
     {param: 'lp1', min: 0, max: 127},
-    {param: 'lp2', min: 0, max: 10},
-    {param: 'lp3', min: 0, max: 10},
-    {param: 'bp1', min: 0, max: 10},
-    {param: 'bp2', min: 0, max: 10},
-    {param: 'bp3', min: 0, max: 10},
-    {param: 'dp1', min: 0, max: 10},
-    {param: 'dp2', min: 0, max: 10},
-    {param: 'dp3', min: 0, max: 10}
+    {param: 'lp2', min: 0, max: 100},
+    {param: 'lp3', min: 0, max: 100},
+    {param: 'bp1', min: 0, max: 100},
+    {param: 'bp2', min: 0, max: 100},
+    {param: 'bp3', min: 0, max: 100},
+    {param: 'dp1', min: 0, max: 100},
+    {param: 'dp2', min: 0, max: 100},
+    {param: 'dp3', min: 0, max: 100}
   ];
 
 
@@ -89,4 +89,6 @@ $(function() {
     setSliderCallbacks(slider, paramSlider.param, socket);
   });
   setConnectionEvents(socket, bandMemberColors);
+
+
 });

@@ -1,8 +1,14 @@
 .app-header {
     font-size: 80px;
+    float: left;
 }
 
 .info-area {
+    margin-top: 20px;
+    float: right;
+}
+
+.header-area {
     height: 150px;
 }
 
@@ -24,7 +30,7 @@
 
 .piano {
     width: 500px;
-    margin: 40px auto;
+    margin: 20px auto;
 }
 
 .key {
@@ -64,7 +70,7 @@
 }
 
 .whiteKey:hover {
-    background: #d2d1d2;
+    background: #9e9d9e;
 }
 
 .whiteKey:active {

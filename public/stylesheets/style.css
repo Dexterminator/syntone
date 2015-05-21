@@ -34,7 +34,7 @@
     position: relative;
 }
 
-.blackRectangle {
+.blackKey {
     z-index: 50;
     width: 31px;
     height: 125px;
@@ -46,7 +46,15 @@
     top: 9px;
 }
 
-.rectangle {
+.blackKey:hover {
+    background-color: #5b5656;
+}
+
+.blackKey:active {
+    background-color: #aea1a1;
+}
+
+.whiteKey {
     width: 55px;
     height: 200px;
     border-radius: 5px;
@@ -55,6 +63,10 @@
     background-color: #FAFFE9;
 }
 
-.rectangle:hover {
+.whiteKey:hover {
     background: #d2d1d2;
+}
+
+.whiteKey:active {
+    background: #676667;
 }

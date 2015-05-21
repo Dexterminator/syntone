@@ -80,7 +80,7 @@ function setUpKeyboard(instrumentId, numberOfKeys) {
         console.log('press ' + keyId);
       })
       .mouseup(function () {
-        $(this).removeClass(keyClass);
+        keyElement.removeClass(keyClass);
         console.log('unpress ' + keyId);
       })
       .mouseenter(function (event) {

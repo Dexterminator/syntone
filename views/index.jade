@@ -10,72 +10,11 @@ block content
       .info-area.clearfix
         h3 Band members
         ul#band-members
-
     .row
       .col-md-6
-        .row
-          .col-md-5
-            h3 Lead
-            .piano.clearfix
-              .key
-                .whiteKey#lkey1
-                .blackKey#lkey2
-              .key
-                .whiteKey#lkey3
-                .blackKey#lkey4
-              .key
-                .whiteKey#lkey5
-              .key
-                .whiteKey#lkey6
-                .blackKey#lkey7
-              .key
-                .whiteKey#lkey8
-                .blackKey#lkey9
-              .key
-                .blackKey#lkey10
-                .whiteKey#lkey11
-              .key
-                .whiteKey#lkey12
-        .row
-          .col-md-11
-            br
-            #lp1
-            br
-            #lp2
-            br
-            #lp3
+        include ./partials/lead
       .col-md-6
-        .row
-          .col-md-5
-            h3 Bass
-            .piano.clearfix
-              .key
-                .whiteKey#bkey1
-                .blackKey#bkey2
-              .key
-                .whiteKey#bkey3
-                .blackKey#bkey4
-              .key
-                .whiteKey#bkey5
-              .key
-                .whiteKey#bkey6
-                .blackKey#bkey7
-              .key
-                .whiteKey#bkey8
-                .blackKey#bkey9
-              .key
-                .blackKey#bkey10
-                .whiteKey#bkey11
-              .key
-                .whiteKey#bkey12
-          .row
-            .col-md-11
-              br
-              #bp1
-              br
-              #bp2
-              br
-              #bp3
+        include ./partials/bass
     br
     button#pd-starter.btn.btn-primary Start pd patch
     button#pd-stopper.btn.btn-danger Stop pd patch

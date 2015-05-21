@@ -53,10 +53,12 @@
 }
 
 .blackKey:hover {
+    transition: background 0.2s;
     background-color: #5b5656;
 }
 
 .blackKey:active {
+    transition: none;
     background-color: #aea1a1;
 }
 
@@ -65,14 +67,16 @@
     height: 200px;
     border-radius: 5px;
     margin: 10px;
-    border: 1px solid rgba(70, 67, 66, 0.95);
+    border: 1px #ccd0be solid;
     background-color: #FAFFE9;
 }
 
 .whiteKey:hover {
+    transition: background 0.2s;
     background: #9e9d9e;
 }
 
 .whiteKey:active {
+    transition: none;
     background: #676667;
 }

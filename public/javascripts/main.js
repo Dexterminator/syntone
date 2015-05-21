@@ -75,29 +75,38 @@ function setUpKeyboard(instrumentId, numberOfKeys) {
     console.log(keyId);
     var keyElement = $(keyId);
     var keyClass = keyElement.hasClass('whiteKey') ? 'white-active-key' : 'black-active-key';
+    var pressed = false;
 
     keyElement
       .mousedown(function () {
+        pressed = true;
         keyElement.addClass(keyClass);
         Pd.send(pdId, [midiValue, 1]);
         console.log('press ' + keyId);
       })
       .mouseup(function () {
         keyElement.removeClass(keyClass);
-        Pd.send(pdId, [midiValue, 0]);
-        console.log('unpress ' + keyId);
+        if (pressed) {
+          pressed = false;
+          Pd.send(pdId, [midiValue, 0]);
+          console.log('unpress ' + keyId);
+        }
       })
       .mouseenter(function (event) {
         if (event.buttons === 1) {
+          pressed = true;
           keyElement.addClass(keyClass);
           Pd.send(pdId, [midiValue, 1]);
           console.log('press ' + keyId);
         }
       })
       .mouseleave(function () {
-        keyElement.removeClass(keyClass);
-        Pd.send(pdId, [midiValue, 0]);
-        console.log('unpress ' + keyId);
+        if (pressed) {
+          pressed = false;
+          keyElement.removeClass(keyClass);
+          Pd.send(pdId, [midiValue, 0]);
+          console.log('unpress ' + keyId);
+        }
       });
   });
 }

@@ -70,6 +70,8 @@ function setConnectionEvents(socket, bandMemberColors) {
 function setUpKeyboard(instrumentId, numberOfKeys) {
   _.forEach(_.range(1, numberOfKeys + 1), function (keyNumber) {
     var keyId = '#' + instrumentId + 'key' + keyNumber;
+    var pdId = instrumentId + 'midi';
+    var midiValue = keyNumber + 59;
     console.log(keyId);
     var keyElement = $(keyId);
     var keyClass = keyElement.hasClass('whiteKey') ? 'white-active-key' : 'black-active-key';
@@ -77,20 +79,24 @@ function setUpKeyboard(instrumentId, numberOfKeys) {
     keyElement
       .mousedown(function () {
         keyElement.addClass(keyClass);
+        Pd.send(pdId, [midiValue, 1]);
         console.log('press ' + keyId);
       })
       .mouseup(function () {
         keyElement.removeClass(keyClass);
+        Pd.send(pdId, [midiValue, 0]);
         console.log('unpress ' + keyId);
       })
       .mouseenter(function (event) {
         if (event.buttons === 1) {
           keyElement.addClass(keyClass);
+          Pd.send(pdId, [midiValue, 1]);
           console.log('press ' + keyId);
         }
       })
       .mouseleave(function () {
         keyElement.removeClass(keyClass);
+        Pd.send(pdId, [midiValue, 0]);
         console.log('unpress ' + keyId);
       });
   });

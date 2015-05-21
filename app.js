@@ -16,6 +16,7 @@ var socketController = require('./communication/socket-controller');
 app.io = io;
 
 socketController.init(io);
+app.locals._ = _;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

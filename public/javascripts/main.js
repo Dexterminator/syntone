@@ -15,12 +15,13 @@ function loadPdPatch() {
   });
 }
 
-function initSlider(param) {
-  var slider = $('#' + param);
+function initSlider(paramSlider) {
+  var slider = $('#' + paramSlider.param);
   slider.slider({
     orientation: "horizontal",
-    range: "min",
-    max: 127,
+    range: 'min',
+    min: paramSlider.min,
+    max: paramSlider.max,
     value: 0
   });
   return slider;
@@ -68,13 +69,24 @@ function setConnectionEvents(socket, bandMemberColors) {
 
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
-  var params = ['lp1', 'lp2', 'bp1', 'bp2', 'dp1', 'dp2'];
+  var paramSliders = [
+    {param: 'lp1', min: 0, max: 127},
+    {param: 'lp2', min: 0, max: 10},
+    {param: 'lp3', min: 0, max: 10},
+    {param: 'bp1', min: 0, max: 10},
+    {param: 'bp2', min: 0, max: 10},
+    {param: 'bp3', min: 0, max: 10},
+    {param: 'dp1', min: 0, max: 10},
+    {param: 'dp2', min: 0, max: 10},
+    {param: 'dp3', min: 0, max: 10}
+  ];
+
+
   var socket = io();
   loadPdPatch();
-  _.forEach(params, function (param) {
-    var slider = initSlider(param);
-    setSliderCallbacks(slider, param, socket);
+  _.forEach(paramSliders, function (paramSlider) {
+    var slider = initSlider(paramSlider);
+    setSliderCallbacks(slider, paramSlider.param, socket);
   });
-
   setConnectionEvents(socket, bandMemberColors);
 });

@@ -5,3 +5,68 @@
 .info-area {
     height: 150px;
 }
+
+/* Piano styles */
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.clearfix { display: inline-block; }
+/* start commented backslash hack \*/
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+/* close commented backslash hack */
+
+.piano {
+    width: 500px;
+    margin: 40px auto;
+}
+
+.key {
+    width: 35px;
+    float: left;
+    margin: 10px;
+    position: relative;
+}
+
+.blackKey {
+    z-index: 50;
+    width: 31px;
+    height: 125px;
+    background: #262524;
+    border-radius: 5px;
+    position: absolute;
+    left: 49px;
+    border: 1px solid;
+    top: 9px;
+}
+
+.blackKey:hover {
+    background-color: #5b5656;
+}
+
+.blackKey:active {
+    background-color: #aea1a1;
+}
+
+.whiteKey {
+    width: 55px;
+    height: 200px;
+    border-radius: 5px;
+    margin: 10px;
+    border: 1px solid rgba(70, 67, 66, 0.95);
+    background-color: #FAFFE9;
+}
+
+.whiteKey:hover {
+    background: #d2d1d2;
+}
+
+.whiteKey:active {
+    background: #676667;
+}

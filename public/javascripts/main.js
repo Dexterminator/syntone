@@ -110,6 +110,46 @@ function setUpKeyboard(instrumentId, numberOfKeys) {
       });
   });
 }
+
+function mapKeyboard() {
+  var keyMap = [
+    {char: 'A', num: 1},
+    {char: 'W', num: 2},
+    {char: 'S', num: 3},
+    {char: 'E', num: 4},
+    {char: 'D', num: 5},
+    {char: 'F', num: 6},
+    {char: 'T', num: 7},
+    {char: 'G', num: 8},
+    {char: 'Y', num: 9},
+    {char: 'H', num: 10},
+    {char: 'U', num: 11},
+    {char: 'J', num: 12},
+  ];
+  $('body')
+    .keydown(function (event) {
+      var char = String.fromCharCode(event.keyCode);
+      var foundMapping = _.find(keyMap, function (mapping) {
+        return char === mapping.char;
+      });
+
+      if (foundMapping) {
+        var keyId = '#lkey' + foundMapping.num;
+        $(keyId).mousedown();
+      }
+    })
+    .keyup(function (event) {
+      var char = String.fromCharCode(event.keyCode);
+      var foundMapping = _.find(keyMap, function (mapping) {
+        return char === mapping.char;
+      });
+
+      if (foundMapping) {
+        var keyId = '#lkey' + foundMapping.num;
+        $(keyId).mouseup();
+      }
+    });
+}
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
@@ -133,4 +173,5 @@ $(function() {
   setConnectionEvents(socket, bandMemberColors);
   setUpKeyboard('l', 12);
   setUpKeyboard('b', 12);
+  mapKeyboard();
 });

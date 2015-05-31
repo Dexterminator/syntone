@@ -684,6 +684,7 @@
 #X obj 459 130 tabread~ SAMPLE;
 #X obj 458 204 *~ 0.1;
 #X obj 306 -42 r bang_drums;
+#X obj 329 -76 inlet trigger;
 #X connect 0 0 3 0;
 #X connect 1 0 2 0;
 #X connect 2 0 19 0;
@@ -718,8 +719,10 @@
 #X connect 33 0 5 0;
 #X connect 33 0 5 1;
 #X connect 34 0 24 0;
-#X restore 327 538 pd sampleplayer;
-#X msg 329 493 pd/samples/kick.wav;
+#X connect 35 0 7 0;
+#X restore 347 571 pd sampleplayer;
+#X msg 178 508 pd/samples/kick.wav;
+#X obj 163 450 r bang_drums;
 #X connect 0 0 1 0;
 #X connect 1 0 2 0;
 #X connect 2 0 6 0;
@@ -729,8 +732,9 @@
 #X connect 4 0 6 0;
 #X connect 4 4 5 0;
 #X connect 5 0 6 0;
-#X connect 6 0 8 0;
+#X connect 6 0 7 1;
 #X connect 8 0 7 0;
+#X connect 9 0 8 0;
 #X restore 89 406 pd drums;
 #X msg 129 76 125;
 #X obj 748 81 t b b b b b b;

@@ -82,7 +82,8 @@ function setUpKeyboard(instrumentId, numberOfKeys, socket) {
 
   function handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId) {
     keyElement.removeClass(keyClass);
-    Pd.send(pdId, [midiValue, 0]);
+    // Pd.send(pdId, [midiValue, 0]); // This would have been so pretty
+    Pd.send(pdId, [0]);
     socket.emit('keyEvent', {
       instrument: instrumentId,
       key: keyNumber,
@@ -143,6 +144,10 @@ function mapKeyboard() {
     {char: 'H', num: 10},
     {char: 'U', num: 11},
     {char: 'J', num: 12},
+    {char: 'K', num: 13},
+    {char: 'O', num: 14},
+    {char: 'L', num: 15},
+    {char: 'P', num: 16},
   ];
   $('body')
     .keydown(function (event) {
@@ -188,14 +193,14 @@ $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
     {param: 'lp1', min: 0, max: 127},
-    {param: 'lp2', min: 0, max: 100},
-    {param: 'lp3', min: 0, max: 100},
-    {param: 'bp1', min: 0, max: 100},
-    {param: 'bp2', min: 0, max: 100},
-    {param: 'bp3', min: 0, max: 100},
-    {param: 'dp1', min: 0, max: 100},
-    {param: 'dp2', min: 0, max: 100},
-    {param: 'dp3', min: 0, max: 100}
+    {param: 'lp2', min: 0, max: 127},
+    {param: 'lp3', min: 0, max: 127},
+    {param: 'bp1', min: 0, max: 127},
+    {param: 'bp2', min: 0, max: 127},
+    {param: 'bp3', min: 0, max: 127},
+    {param: 'dp1', min: 0, max: 127},
+    {param: 'dp2', min: 0, max: 127},
+    {param: 'dp3', min: 0, max: 127}
   ];
 
   var socket = io();

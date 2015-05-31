@@ -28,9 +28,16 @@ module.exports.init = function(io) {
     setParameterCallbacks(socket, roomState, 'bass', bassParams);
     setParameterCallbacks(socket, roomState, 'lead', leadParams);
     setParameterCallbacks(socket, roomState, 'drums', drumsParams);
+    setKeyboardCallbacks(socket);
     setRoomConnectionEvents(io, room, socket);
   });
 };
+
+function setKeyboardCallbacks(socket) {
+  socket.on('keyEvent', function (keyInfo) {
+    socket.to(socket.room).emit('keyEvent', keyInfo);
+  });
+}
 
 function setParameterCallbacks (socket, roomState, instrument, paramList) {
   _.forEach(paramList, function (param) {

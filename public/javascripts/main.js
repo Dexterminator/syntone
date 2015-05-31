@@ -67,7 +67,31 @@ function setConnectionEvents(socket, bandMemberColors) {
   });
 }
 
-function setUpKeyboard(instrumentId, numberOfKeys) {
+function setUpKeyboard(instrumentId, numberOfKeys, socket) {
+  function handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId) {
+    keyElement.addClass(keyClass);
+    Pd.send(pdId, [midiValue, 1]);
+    socket.emit('keyEvent', {
+      instrument: instrumentId,
+      key: keyNumber,
+      midiValue: midiValue,
+      pressed: true
+    });
+    console.log('press ' + keyId);
+  }
+
+  function handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId) {
+    keyElement.removeClass(keyClass);
+    Pd.send(pdId, [midiValue, 0]);
+    socket.emit('keyEvent', {
+      instrument: instrumentId,
+      key: keyNumber,
+      midiValue: midiValue,
+      pressed: false
+    });
+    console.log('unpress ' + keyId);
+  }
+
   _.forEach(_.range(1, numberOfKeys + 1), function (keyNumber) {
     var keyId = '#' + instrumentId + 'key' + keyNumber;
     var pdId = instrumentId + 'midi';
@@ -80,32 +104,24 @@ function setUpKeyboard(instrumentId, numberOfKeys) {
     keyElement
       .mousedown(function () {
         pressed = true;
-        keyElement.addClass(keyClass);
-        Pd.send(pdId, [midiValue, 1]);
-        console.log('press ' + keyId);
+        handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
       })
       .mouseup(function () {
-        keyElement.removeClass(keyClass);
         if (pressed) {
           pressed = false;
-          Pd.send(pdId, [midiValue, 0]);
-          console.log('unpress ' + keyId);
+          handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
         }
       })
       .mouseenter(function (event) {
         if (event.buttons === 1) {
           pressed = true;
-          keyElement.addClass(keyClass);
-          Pd.send(pdId, [midiValue, 1]);
-          console.log('press ' + keyId);
+          handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
         }
       })
       .mouseleave(function () {
         if (pressed) {
           pressed = false;
-          keyElement.removeClass(keyClass);
-          Pd.send(pdId, [midiValue, 0]);
-          console.log('unpress ' + keyId);
+          handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
         }
       });
   });
@@ -150,6 +166,22 @@ function mapKeyboard() {
       }
     });
 }
+
+function setKeyBoardEvents(socket) {
+  socket.on('keyEvent', function (keyInfo) {
+    var keyId = '#' + keyInfo.instrument + 'key' + keyInfo.key;
+    var keyElement = $(keyId);
+    var keyClass = keyElement.hasClass('whiteKey') ? 'white-active-key' : 'black-active-key';
+    if (keyInfo.pressed) {
+      keyElement.addClass(keyClass);
+      var pdId = keyInfo.instrument + 'midi';
+      Pd.send(pdId, [keyInfo.midiValue, 1]);
+    } else {
+      keyElement.removeClass(keyClass);
+    }
+  });
+}
+
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
@@ -171,7 +203,8 @@ $(function() {
     setSliderCallbacks(slider, paramSlider.param, socket);
   });
   setConnectionEvents(socket, bandMemberColors);
-  setUpKeyboard('l', 12);
-  setUpKeyboard('b', 12);
+  setKeyBoardEvents(socket);
+  setUpKeyboard('l', 12, socket);
+  setUpKeyboard('b', 12, socket);
   mapKeyboard();
 });

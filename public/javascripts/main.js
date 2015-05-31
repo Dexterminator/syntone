@@ -101,29 +101,31 @@ function setUpKeyboard(instrumentId, numberOfKeys, socket) {
     var keyClass = keyElement.hasClass('whiteKey') ? 'white-active-key' : 'black-active-key';
     var pressed = false;
 
-    keyElement
-      .mousedown(function () {
+    keyElement.mousedown(function () {
+      pressed = true;
+      handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
+    });
+
+    keyElement.mouseup(function () {
+      if (pressed) {
+        pressed = false;
+        handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
+      }
+    });
+
+    keyElement.mouseenter(function (event) {
+      if (event.buttons === 1) {
         pressed = true;
         handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
-      })
-      .mouseup(function () {
-        if (pressed) {
-          pressed = false;
-          handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
-        }
-      })
-      .mouseenter(function (event) {
-        if (event.buttons === 1) {
-          pressed = true;
-          handlePress(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
-        }
-      })
-      .mouseleave(function () {
-        if (pressed) {
-          pressed = false;
-          handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
-        }
-      });
+      }
+    });
+
+    keyElement.mouseleave(function () {
+      if (pressed) {
+        pressed = false;
+        handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId);
+      }
+    });
   });
 }
 
@@ -204,7 +206,7 @@ $(function() {
   });
   setConnectionEvents(socket, bandMemberColors);
   setKeyBoardEvents(socket);
-  setUpKeyboard('l', 12, socket);
-  setUpKeyboard('b', 12, socket);
+  setUpKeyboard('l', 24, socket);
+  setUpKeyboard('b', 24, socket);
   mapKeyboard();
 });

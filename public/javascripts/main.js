@@ -2,15 +2,11 @@ function loadPdPatch() {
   var patch;
   $.get('pd/Syntone.pd', function (example) {
     $.get('pd/SyntoneLead.pd', function (syntone) {
-      // Loading the patch and abstraction
       Pd.registerAbstraction('SyntoneLead', syntone);
       patch = Pd.loadPatch(example);
-      $('#pd-starter').click(function (event) {
-        Pd.start();
-      });
-      $('#pd-stopper').click(function (event) {
-        Pd.stop();
-      });
+      $('#pd-starter').click(function () {Pd.start()});
+      $('#pd-stopper').click(function () {Pd.stop()});
+      Pd.start();
     });
   });
 }
@@ -130,7 +126,8 @@ function setUpKeyboard(instrumentId, numberOfKeys, socket) {
   });
 }
 
-function mapKeyboard() {
+function mapKeyboard(instrumentId) {
+  var idPrefix = '#' + instrumentId + 'key';
   var keyMap = [
     {char: 'A', num: 1},
     {char: 'W', num: 2},
@@ -149,15 +146,22 @@ function mapKeyboard() {
     {char: 'L', num: 15},
     {char: 'P', num: 16},
   ];
+
+  $('body').unbind('keydown');
   $('body')
     .keydown(function (event) {
       var char = String.fromCharCode(event.keyCode);
+      if (char === 'Q') {
+        $("[name='keymap-choice']").not(':checked').click();
+        return;
+      }
+
       var foundMapping = _.find(keyMap, function (mapping) {
         return char === mapping.char;
       });
 
       if (foundMapping) {
-        var keyId = '#lkey' + foundMapping.num;
+        var keyId = idPrefix + foundMapping.num;
         $(keyId).mousedown();
       }
     })
@@ -168,7 +172,7 @@ function mapKeyboard() {
       });
 
       if (foundMapping) {
-        var keyId = '#lkey' + foundMapping.num;
+        var keyId = idPrefix + foundMapping.num;
         $(keyId).mouseup();
       }
     });
@@ -213,5 +217,8 @@ $(function() {
   setKeyBoardEvents(socket);
   setUpKeyboard('l', 24, socket);
   setUpKeyboard('b', 24, socket);
-  mapKeyboard();
+  mapKeyboard('l');
+  $('#radios').popover('show');
+  $('#lead-choice').click(function () {mapKeyboard('l')});
+  $('#bass-choice').click(function () {mapKeyboard('b')});
 });

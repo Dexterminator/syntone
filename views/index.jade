@@ -10,6 +10,17 @@ block content
       .info-area.clearfix
         h3 Band members
         ul#band-members
+    .row
+      .col-md-2#radios(data-toggle='tooltip', data-trigger='click|hover|focus', data-content='Use ' +
+      'A, W, S, E, D, F, T, G, Y, H, U, J, K, O, L, and P to play notes on the keyboard. Q to switch instrument.')
+        .radio
+          label
+            input#lead-choice(type='radio', name='keymap-choice', checked='true')
+            span Map keyboard to lead
+        .radio
+          label
+            input#bass-choice(type='radio', name='keymap-choice')
+            span Map keyboard to bass
     .row.unselectable
       .col-md-12
         include ./partials/lead

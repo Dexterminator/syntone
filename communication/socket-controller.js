@@ -52,15 +52,16 @@ function setParameterCallbacks (socket, roomState, instrument, paramList) {
 }
 
 function setRoomConnectionEvents(io, room, socket) {
+  socket.name = socket.id;
   _.forEach(roomSockets(io, room), function (roomSocket) {
-    socket.emit('joined', roomSocket.id);
+    socket.emit('joined', roomSocket.name);
   });
-  socket.to(socket.room).emit('joined', socket.id);
+  socket.to(socket.room).emit('joined', socket.name);
   socket.on('disconnect', function () {
-    io.sockets.to(room).emit('left', socket.id);
+    io.sockets.to(room).emit('left', socket.name);
   });
   socket.on('name-changed', function (name) {
-    console.log(name);
+    socket.name = name;
     io.sockets.to(socket.room).emit('name-changed', {id: socket.id, name: name});
     socket.emit('name-changed', {id: socket.id, name: name});
   });

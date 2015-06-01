@@ -59,6 +59,11 @@ function setRoomConnectionEvents(io, room, socket) {
   socket.on('disconnect', function () {
     io.sockets.to(room).emit('left', socket.id);
   });
+  socket.on('name-changed', function (name) {
+    console.log(name);
+    io.sockets.to(socket.room).emit('name-changed', {id: socket.id, name: name});
+    socket.emit('name-changed', {id: socket.id, name: name});
+  });
 }
 
 function syncRoomParams(room, socket) {

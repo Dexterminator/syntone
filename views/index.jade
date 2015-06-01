@@ -21,6 +21,9 @@ block content
           label
             input#bass-choice(type='radio', name='keymap-choice')
             span Map keyboard to bass
+      .col-md-3.col-md-offset-3
+        input.form-control#name-input(type='text', placeholder='Name', maxlength='18')
+        a.btn.btn-primary#name-submit Submit name
     .row.unselectable
       .col-md-12
         include ./partials/lead

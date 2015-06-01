@@ -160,7 +160,7 @@ function mapKeyboard(instrumentId) {
         return char === mapping.char;
       });
 
-      if (foundMapping) {
+      if (foundMapping && !$('#name-input').is(':focus')) {
         var keyId = idPrefix + foundMapping.num;
         $(keyId).mousedown();
       }
@@ -193,6 +193,32 @@ function setKeyBoardEvents(socket) {
   });
 }
 
+function setupRadios() {
+  $('#radios').popover('show');
+  $('#lead-choice').click(function () {
+    mapKeyboard('l')
+  });
+  $('#bass-choice').click(function () {
+    mapKeyboard('b')
+  });
+}
+
+function setupNameInput(socket) {
+  $('#name-submit').click(function () {
+    socket.emit('name-changed', $('#name-input').val());
+    $('#name-submit').fadeOut();
+    $('#name-input').fadeOut();
+  });
+  socket.on('name-changed', function (nameInfo) {
+    var bandMembers = $('#band-members');
+    var memberElems = bandMembers.find('li');
+    var changed = $(_.find(memberElems, function (memberElem) {
+      return $(memberElem).html() === nameInfo.id;
+    }));
+    changed.html(nameInfo.name);
+  });
+}
+
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
@@ -218,7 +244,6 @@ $(function() {
   setUpKeyboard('l', 24, socket);
   setUpKeyboard('b', 24, socket);
   mapKeyboard('l');
-  $('#radios').popover('show');
-  $('#lead-choice').click(function () {mapKeyboard('l')});
-  $('#bass-choice').click(function () {mapKeyboard('b')});
+  setupRadios();
+  setupNameInput(socket);
 });

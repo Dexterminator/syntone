@@ -27,6 +27,7 @@ function setSliderCallbacks(slider, param, socket) {
   socket.on(param, function (message) {
     console.log('got slider change message: ', message);
     slider.slider('value', message);
+    Pd.send(param, [parseFloat(message)]);
   });
 
   slider.on('slide', function (event, ui) {

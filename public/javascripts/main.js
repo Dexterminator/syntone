@@ -22,16 +22,11 @@ function loadPdPatch() {
     $.get('pd/SyntoneLead.pd', function (syntone) {
       Pd.registerAbstraction('SyntoneLead', syntone);
       patch = Pd.loadPatch(example);
-      $('#pd-starter').click(function () {Pd.start()});
-      $('#pd-stopper').click(function () {Pd.stop()});
       Pd.start();
-      console.log(leadPatterns[0].join(' '));
       _.forEach(leadPatterns[0], function (elem, index) {
-        console.log('rl' + (index + 1));
         Pd.send('rl' + (index + 1), [elem]);
       });
       _.forEach(bassPatterns[0], function (elem, index) {
-        console.log('bl' + (index + 1));
         Pd.send('bl' + (index + 1), [elem]);
       });
     });
@@ -101,7 +96,6 @@ function setUpKeyboard(instrumentId, numberOfKeys, socket) {
       midiValue: midiValue,
       pressed: true
     });
-    console.log('press ' + keyId);
   }
 
   function handleRelease(keyElement, keyClass, pdId, midiValue, keyNumber, keyId) {
@@ -114,14 +108,12 @@ function setUpKeyboard(instrumentId, numberOfKeys, socket) {
       midiValue: midiValue,
       pressed: false
     });
-    console.log('unpress ' + keyId);
   }
 
   _.forEach(_.range(1, numberOfKeys + 1), function (keyNumber) {
     var keyId = '#' + instrumentId + 'key' + keyNumber;
     var pdId = instrumentId + 'midi';
     var midiValue = keyNumber + 59;
-    console.log(keyId);
     var keyElement = $(keyId);
     var keyClass = keyElement.hasClass('whiteKey') ? 'white-active-key' : 'black-active-key';
     var pressed = false;
@@ -267,7 +259,6 @@ function setupLeadPatternRadios() {
       $(button).html(iconLookup[pattern[i]]);
     });
     _.forEach(pattern, function (elem, index) {
-      console.log('rl' + (index + 1));
       Pd.send('rl' + (index + 1), [elem]);
     });
   });
@@ -340,12 +331,11 @@ $(function() {
     {param: 'lp1', min: 0, max: 127},
     {param: 'lp2', min: 0, max: 127},
     {param: 'lp3', min: 0, max: 127},
+    {param: 'lp4', min: 0, max: 127},
     {param: 'bp1', min: 0, max: 127},
     {param: 'bp2', min: 0, max: 127},
     {param: 'bp3', min: 0, max: 127},
-    {param: 'dp1', min: 0, max: 127},
-    {param: 'dp2', min: 0, max: 127},
-    {param: 'dp3', min: 0, max: 127}
+    {param: 'bp4', min: 0, max: 127},
   ];
 
   var socket = io();

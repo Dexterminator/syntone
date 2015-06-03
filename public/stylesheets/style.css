@@ -111,3 +111,13 @@
 .pattern-button {
     margin-right: 5px;
 }
+
+.main-logo {
+    margin-top: 5px;
+    height: 95px;
+    width: auto;
+}
+
+#name-input {
+    margin-bottom: 5px;
+}

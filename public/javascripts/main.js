@@ -22,8 +22,6 @@ function loadPdPatch() {
     $.get('pd/SyntoneLead.pd', function (syntone) {
       Pd.registerAbstraction('SyntoneLead', syntone);
       patch = Pd.loadPatch(example);
-      $('#pd-starter').click(function () {Pd.start()});
-      $('#pd-stopper').click(function () {Pd.stop()});
       Pd.start();
       console.log(leadPatterns[0].join(' '));
       _.forEach(leadPatterns[0], function (elem, index) {

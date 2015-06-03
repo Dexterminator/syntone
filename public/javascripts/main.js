@@ -1,4 +1,15 @@
-var customPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var leadCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var bassCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var leadPatterns = [
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+];
+var bassPatterns = [
+  [2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+];
 var iconLookup = {
   0: '<span class="fa fa-circle-o"</span>',
   1: '<span class="fa fa-adjust"</span>',
@@ -227,25 +238,19 @@ function setupNameInput(socket) {
   });
 }
 
-function setupPatternChoice() {
-  var patterns = [
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
-    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
-  ];
-
+function setupLeadPatternRadios() {
   var leadPatternRadios = $('#lpattern-choice input');
-  leadPatternRadios.on('change', function() {
+  leadPatternRadios.on('change', function () {
     var patternIndex = $("input[name='lead-pattern-choice']:checked").val();
     var pattern;
     if (patternIndex === 'custom') {
-      Pd.send('lrhythm', customPattern);
+      Pd.send('lrhythm', leadCustomPattern);
       $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
         $(button).removeClass('disabled');
       });
-      pattern = customPattern;
+      pattern = leadCustomPattern;
     } else {
-      var pattern = patterns[patternIndex];
+      var pattern = leadPatterns[patternIndex];
       $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
         $(button).addClass('disabled');
       });
@@ -255,26 +260,58 @@ function setupPatternChoice() {
     });
     Pd.send('lrhythm', pattern);
   });
+}
 
-  //var bassPatternRadios = $('#bpattern-choice input');
-  //bassPatternRadios.on('change', function() {
-  //  var patternIndex = $("input[name='bass-pattern-choice']:checked").val();
-  //  var pattern = patterns[patternIndex];
-  //  $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
-  //    $(button).html(pattern[i]);
-  //  });
-  //  Pd.send('brhythm', pattern);
-  //});
+function setupBassPatternRadios() {
+  var leadPatternRadios = $('#bpattern-choice input');
+  leadPatternRadios.on('change', function () {
+    var patternIndex = $("input[name='bass-pattern-choice']:checked").val();
+    var pattern;
+    if (patternIndex === 'custom') {
+      Pd.send('brhythm', bassCustomPattern);
+      $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).removeClass('disabled');
+      });
+      pattern = bassCustomPattern;
+    } else {
+      var pattern = bassPatterns[patternIndex];
+      $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).addClass('disabled');
+      });
+    }
+    $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+      $(button).html(iconLookup[pattern[i]]);
+    });
+    Pd.send('brhythm', pattern);
+  });
+}
 
-  Pd.send('brhythm', patterns[0]);
-  Pd.send('lrhythm', patterns[0]);
+function setupPatternChoice() {
+  setupLeadPatternRadios();
+  setupBassPatternRadios();
+
+  Pd.send('lrhythm', leadPatterns[0]);
+  Pd.send('brhythm', bassPatterns[0]);
 
   $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
-    $(button).html(iconLookup[patterns[0][i]]);
+    $(button).html(iconLookup[leadPatterns[0][i]]);
   });
 
   $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
-    $(button).html(patterns[0][i]);
+    $(button).html(iconLookup[bassPatterns[0][i]]);
+  });
+}
+
+function setupCustomPattern(instrumentId) {
+  var buttonsId = '#' + instrumentId + '-pattern-buttons';
+  var customPattern = instrumentId === 'l' ? leadCustomPattern : bassCustomPattern;
+  $(buttonsId).find('.pattern-button').each(function (i, button) {
+    $(button).click(function () {
+      customPattern[i]++;
+      customPattern[i] = customPattern[i] % 3;
+      $(this).html(iconLookup[customPattern[i]]);
+      Pd.send(instrumentId + 'rhythm', customPattern);
+    })
   });
 }
 
@@ -306,11 +343,6 @@ $(function() {
   setupKeyboardChoice();
   setupNameInput(socket);
   setupPatternChoice();
-  $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
-    $(button).click(function () {
-      customPattern[i]++;
-      customPattern[i] = customPattern[i] % 3;
-      $(this).html(iconLookup[customPattern[i]]);
-    })
-  });
+  setupCustomPattern('l');
+  setupCustomPattern('b');
 });

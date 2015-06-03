@@ -340,12 +340,11 @@ $(function() {
     {param: 'lp1', min: 0, max: 127},
     {param: 'lp2', min: 0, max: 127},
     {param: 'lp3', min: 0, max: 127},
+    {param: 'lp4', min: 0, max: 127},
     {param: 'bp1', min: 0, max: 127},
     {param: 'bp2', min: 0, max: 127},
     {param: 'bp3', min: 0, max: 127},
-    {param: 'dp1', min: 0, max: 127},
-    {param: 'dp2', min: 0, max: 127},
-    {param: 'dp3', min: 0, max: 127}
+    {param: 'bp4', min: 0, max: 127},
   ];
 
   var socket = io();

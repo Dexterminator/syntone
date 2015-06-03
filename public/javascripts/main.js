@@ -230,18 +230,33 @@ function setupPatternChoice() {
   var leadPatternRadios = $('#lpattern-choice input');
   leadPatternRadios.on('change', function() {
     var patternIndex = $("input[name='lead-pattern-choice']:checked").val();
-    console.log(patterns[patternIndex]);
+    var pattern = patterns[patternIndex];
+    $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+      $(button).html(pattern[i]);
+    });
     Pd.send('lrhythm', patterns[patternIndex]);
   });
 
   var bassPatternRadios = $('#bpattern-choice input');
   bassPatternRadios.on('change', function() {
     var patternIndex = $("input[name='bass-pattern-choice']:checked").val();
-    console.log(patterns[patternIndex]);
-    Pd.send('brhythm', patterns[patternIndex]);
+    var pattern = patterns[patternIndex];
+    $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+      $(button).html(pattern[i]);
+    });
+    Pd.send('brhythm', pattern);
   });
+
   Pd.send('brhythm', patterns[0]);
   Pd.send('lrhythm', patterns[0]);
+
+  $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+    $(button).html(patterns[0][i]);
+  });
+
+  $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+    $(button).html(patterns[0][i]);
+  });
 }
 
 $(function() {

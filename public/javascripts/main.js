@@ -1,3 +1,21 @@
+var leadCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var bassCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var leadPatterns = [
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+];
+var bassPatterns = [
+  [2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0, 2, 0],
+  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+];
+var iconLookup = {
+  0: '<span class="fa fa-circle-o"</span>',
+  1: '<span class="fa fa-adjust"</span>',
+  2: '<span class="fa fa-circle"</span>'
+};
+
 function loadPdPatch() {
   var patch;
   $.get('pd/Syntone.pd', function (example) {
@@ -194,7 +212,7 @@ function setKeyBoardEvents(socket) {
   });
 }
 
-function setupRadios() {
+function setupKeyboardChoice() {
   $('#radios').popover('show');
   $('#lead-choice').click(function () {
     mapKeyboard('l')
@@ -217,6 +235,83 @@ function setupNameInput(socket) {
       return $(memberElem).html() === nameInfo.id;
     }));
     changed.html(nameInfo.name);
+  });
+}
+
+function setupLeadPatternRadios() {
+  var leadPatternRadios = $('#lpattern-choice input');
+  leadPatternRadios.on('change', function () {
+    var patternIndex = $("input[name='lead-pattern-choice']:checked").val();
+    var pattern;
+    if (patternIndex === 'custom') {
+      Pd.send('lrhythm', leadCustomPattern);
+      $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).removeClass('disabled');
+      });
+      pattern = leadCustomPattern;
+    } else {
+      var pattern = leadPatterns[patternIndex];
+      $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).addClass('disabled');
+      });
+    }
+    $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+      $(button).html(iconLookup[pattern[i]]);
+    });
+    Pd.send('lrhythm', pattern);
+  });
+}
+
+function setupBassPatternRadios() {
+  var leadPatternRadios = $('#bpattern-choice input');
+  leadPatternRadios.on('change', function () {
+    var patternIndex = $("input[name='bass-pattern-choice']:checked").val();
+    var pattern;
+    if (patternIndex === 'custom') {
+      Pd.send('brhythm', bassCustomPattern);
+      $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).removeClass('disabled');
+      });
+      pattern = bassCustomPattern;
+    } else {
+      var pattern = bassPatterns[patternIndex];
+      $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+        $(button).addClass('disabled');
+      });
+    }
+    $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+      $(button).html(iconLookup[pattern[i]]);
+    });
+    Pd.send('brhythm', pattern);
+  });
+}
+
+function setupPatternChoice() {
+  setupLeadPatternRadios();
+  setupBassPatternRadios();
+
+  Pd.send('lrhythm', leadPatterns[0]);
+  Pd.send('brhythm', bassPatterns[0]);
+
+  $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
+    $(button).html(iconLookup[leadPatterns[0][i]]);
+  });
+
+  $('#b-pattern-buttons').find('.pattern-button').each(function (i, button) {
+    $(button).html(iconLookup[bassPatterns[0][i]]);
+  });
+}
+
+function setupCustomPattern(instrumentId) {
+  var buttonsId = '#' + instrumentId + '-pattern-buttons';
+  var customPattern = instrumentId === 'l' ? leadCustomPattern : bassCustomPattern;
+  $(buttonsId).find('.pattern-button').each(function (i, button) {
+    $(button).click(function () {
+      customPattern[i]++;
+      customPattern[i] = customPattern[i] % 3;
+      $(this).html(iconLookup[customPattern[i]]);
+      Pd.send(instrumentId + 'rhythm', customPattern);
+    })
   });
 }
 
@@ -245,6 +340,9 @@ $(function() {
   setUpKeyboard('l', 24, socket);
   setUpKeyboard('b', 24, socket);
   mapKeyboard('l');
-  setupRadios();
+  setupKeyboardChoice();
   setupNameInput(socket);
+  setupPatternChoice();
+  setupCustomPattern('l');
+  setupCustomPattern('b');
 });

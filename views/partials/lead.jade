@@ -54,23 +54,24 @@
     span Release
     #lp4.param-slider
     br
-    form#lpattern-choice
+    .checkbox
+      label
+        input(type='checkbox')
+        span Continuous
+    #lpattern-choice
       .radio-inline
-        label
-          input(type='radio', name='lead-pattern-choice', checked='true', value='0')
-          span Pattern 1
+        input(type='radio', name='lead-pattern-choice', checked='true', value='0')
+        span Pattern 1
       .radio-inline
-        label
-          input(type='radio', name='lead-pattern-choice', value='1')
-          span Pattern 2
+        input(type='radio', name='lead-pattern-choice', value='1')
+        span Pattern 2
       .radio-inline
-        label
-          input(type='radio', name='lead-pattern-choice', value='2')
-          span Pattern 3
+        input(type='radio', name='lead-pattern-choice', value='2')
+        span Pattern 3
       .radio-inline
-        label
-          input#l-custom-pattern(type='radio', name='lead-pattern-choice', value='custom')
-          span Custom
+        input#l-custom-pattern(type='radio', name='lead-pattern-choice', value='custom')
+        span Custom
+
     #l-pattern-buttons
       button.btn.btn-xs.pattern-button.disabled x
       button.btn.btn-xs.pattern-button.disabled x

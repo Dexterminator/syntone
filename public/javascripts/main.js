@@ -325,6 +325,19 @@ function setupCustomPattern(instrumentId) {
   });
 }
 
+function setupMasterVolume() {
+  var slider = $('#master-volume');
+  slider.slider({
+    orientation: "horizontal",
+    range: 'min',
+    min: 0,
+    max: 100,
+    value: 50
+  });
+  slider.on('slide', function (event, ui) {
+    Pd.send('mvol', [parseFloat(ui.value / 100)]);
+  });
+}
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
@@ -355,4 +368,5 @@ $(function() {
   setupCustomPattern('l');
   setupCustomPattern('b');
   $('#name-input').focus();
+  setupMasterVolume();
 });

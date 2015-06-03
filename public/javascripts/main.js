@@ -354,4 +354,5 @@ $(function() {
   setupPatternChoice();
   setupCustomPattern('l');
   setupCustomPattern('b');
+  $('#name-input').focus();
 });

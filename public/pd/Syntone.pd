@@ -173,7 +173,7 @@
 #X restore 353 579 pd drums;
 #X obj 1411 68 t b b b b b b;
 #X obj 1564 85 s bang_drums;
-#N canvas 0 0 1916 978 leadsynthesizer 1;
+#N canvas 0 1 1916 977 leadsynthesizer 0;
 #X obj 59 51 inlet tempo;
 #X obj 158 53 inlet pitch;
 #X obj 286 56 inlet rhythm;
@@ -320,7 +320,7 @@
 #X obj 900 355 t b f;
 #X obj 901 325 select 0;
 #X obj 929 405 delay 100;
-#N canvas -9 -9 1920 978 syntone_lead 1;
+#N canvas 0 0 1916 978 syntone_lead 0;
 #X obj 829 527 outlet~;
 #X obj 427 60 phasor~;
 #X obj 477 57 phasor~;
@@ -463,7 +463,6 @@
 #X restore 549 586 pd scale;
 #X msg 178 78 69;
 #X msg 1106 367 set 0 \$1;
-#X obj 336 78 r bang_rhythm;
 #X obj 1109 100 inlet p4;
 #N canvas 1166 291 450 300 scale 0;
 #X obj 89 99 inlet;
@@ -479,16 +478,16 @@
 #X msg 337 106 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1;
 #X obj 693 484 line~ 0;
 #X obj 568 84 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 1000 1;
+-1 -1 0 1;
 #X floatatom 569 228 5 0 0 0 - - -;
 #X obj 1125 134 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 6000 1;
+-1 -1 0 1;
 #X floatatom 1126 278 5 0 0 0 - - -;
 #X obj 885 79 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 7200 1;
+-1 -1 0 1;
 #X floatatom 886 223 5 0 0 0 - - -;
 #X obj 813 75 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 11500 1;
+-1 -1 0 1;
 #X floatatom 814 219 5 0 0 0 - - -;
 #X connect 0 0 3 0;
 #X connect 0 0 11 0;
@@ -639,8 +638,8 @@
 #X connect 147 0 34 1;
 #X connect 148 0 146 0;
 #X connect 149 1 151 0;
-#X connect 150 0 166 0;
-#X connect 151 0 166 0;
+#X connect 150 0 165 0;
+#X connect 151 0 165 0;
 #X connect 152 0 147 0;
 #X connect 153 0 149 0;
 #X connect 153 1 155 0;
@@ -652,19 +651,18 @@
 #X connect 159 0 147 1;
 #X connect 160 0 8 0;
 #X connect 161 0 44 0;
-#X connect 162 0 165 0;
-#X connect 163 0 164 0;
-#X connect 164 0 161 0;
-#X connect 165 0 5 0;
-#X connect 166 0 152 1;
-#X connect 167 0 168 0;
-#X connect 167 0 159 0;
-#X connect 169 0 170 0;
-#X connect 169 0 164 0;
-#X connect 171 0 172 0;
-#X connect 171 0 146 2;
-#X connect 173 0 174 0;
-#X connect 173 0 146 1;
+#X connect 162 0 163 0;
+#X connect 163 0 161 0;
+#X connect 164 0 5 0;
+#X connect 165 0 152 1;
+#X connect 166 0 167 0;
+#X connect 166 0 159 0;
+#X connect 168 0 169 0;
+#X connect 168 0 163 0;
+#X connect 170 0 171 0;
+#X connect 170 0 146 2;
+#X connect 172 0 173 0;
+#X connect 172 0 146 1;
 #X restore 547 695 pd leadsynthesizer;
 #X obj 628 599 r lp1;
 #X obj 635 633 r lp2;
@@ -781,7 +779,7 @@
 #X floatatom 1075 232 5 0 0 0 - - -;
 #X obj 495 303 r bang_metro_on;
 #X obj 818 635 r brhythm;
-#N canvas -9 -9 1920 978 basssynthesizer 1;
+#N canvas 0 0 1916 978 basssynthesizer 1;
 #X obj 66 83 inlet tempo;
 #X obj 164 19 inlet pitch;
 #X floatatom 81 110 5 0 0 0 - - -;
@@ -937,7 +935,7 @@
 #N canvas 307 73 1280 731 syntone_bass~ 0;
 #X obj 305 414 outlet~;
 #X obj 579 80 vsl 15 128 100 1000 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 12700 1;
+-1 -1 0 1;
 #X obj 199 71 inlet;
 #X obj 662 84 vsl 15 128 0.5 5 0 0 empty empty empty 0 -9 0 10 -262144
 -1 -1 0 1;
@@ -1006,7 +1004,6 @@
 #X msg 373 73 0 1 1 1 0 1 1 1 0 1 1 1 0 1 1 1;
 #X msg 224 55 57;
 #X msg 373 48 1 0 1 0 1 0 1 0 1 0 1 0 1 0 1 0;
-#X obj 373 11 r bang_rhythm;
 #X obj 292 29 inlet rhythm;
 #N canvas 314 219 450 300 scale 0;
 #X obj 79 89 inlet;
@@ -1024,13 +1021,14 @@
 -1 -1 0 1;
 #X floatatom 1150 202 5 0 0 0 - - -;
 #X obj 864 75 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 1200 1;
+-1 -1 0 1;
 #X floatatom 865 219 5 0 0 0 - - -;
 #X obj 609 87 vsl 15 128 0 127 0 0 empty empty empty 0 -9 0 10 -262144
--1 -1 7100 1;
+-1 -1 0 1;
 #X floatatom 610 231 5 0 0 0 - - -;
 #X obj 850 50 inlet release;
 #X obj 1127 32 inlet fuzz;
+#X obj 373 11 r bang_rhythm;
 #X connect 0 0 2 0;
 #X connect 0 0 5 0;
 #X connect 1 0 72 0;
@@ -1176,8 +1174,8 @@
 #X connect 144 1 148 0;
 #X connect 145 0 152 0;
 #X connect 146 0 72 0;
-#X connect 147 0 166 0;
-#X connect 148 0 166 0;
+#X connect 147 0 165 0;
+#X connect 148 0 165 0;
 #X connect 149 0 154 0;
 #X connect 150 0 151 0;
 #X connect 151 0 144 0;
@@ -1194,18 +1192,18 @@
 #X connect 160 0 71 0;
 #X connect 161 0 72 0;
 #X connect 162 0 71 0;
-#X connect 163 0 162 0;
-#X connect 164 0 71 0;
-#X connect 165 0 159 0;
-#X connect 166 0 149 1;
-#X connect 167 0 168 0;
-#X connect 167 0 152 1;
-#X connect 169 0 170 0;
-#X connect 169 0 165 0;
-#X connect 171 0 172 0;
-#X connect 171 0 156 0;
-#X connect 173 0 165 0;
-#X connect 174 0 152 1;
+#X connect 163 0 71 0;
+#X connect 164 0 159 0;
+#X connect 165 0 149 1;
+#X connect 166 0 167 0;
+#X connect 166 0 152 1;
+#X connect 168 0 169 0;
+#X connect 168 0 164 0;
+#X connect 170 0 171 0;
+#X connect 170 0 156 0;
+#X connect 172 0 164 0;
+#X connect 173 0 152 1;
+#X connect 174 0 162 0;
 #X restore 798 742 pd basssynthesizer;
 #X obj 878 663 r bp1;
 #X obj 922 665 r bp2;

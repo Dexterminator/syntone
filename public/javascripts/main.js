@@ -1,7 +1,7 @@
 var leadCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var bassCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var leadPatterns = [
-  [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
 ];
@@ -287,11 +287,18 @@ function setupBassPatternRadios() {
 }
 
 function setupPatternChoice() {
-  setupLeadPatternRadios();
-  setupBassPatternRadios();
+  //setupLeadPatternRadios();
+  //setupBassPatternRadios();
 
-  Pd.send('lrhythm', leadPatterns[0]);
-  Pd.send('brhythm', bassPatterns[0]);
+  console.log(leadPatterns[0].join(' '));
+  _.forEach(leadPatterns[0], function (elem, index) {
+    console.log(index);
+    console.log(leadPatterns[0][index]);
+    console.log('rl' + (index + 1));
+    Pd.send('rl' + (index + 1), [leadPatterns[0][index]]);
+  });
+  //Pd.send('lrhythm', [leadPatterns[0]]);
+  //Pd.send('brhythm', [bassPatterns[0].join(' ')]);
 
   $('#l-pattern-buttons').find('.pattern-button').each(function (i, button) {
     $(button).html(iconLookup[leadPatterns[0][i]]);
@@ -310,7 +317,11 @@ function setupCustomPattern(instrumentId) {
       customPattern[i]++;
       customPattern[i] = customPattern[i] % 3;
       $(this).html(iconLookup[customPattern[i]]);
-      Pd.send(instrumentId + 'rhythm', customPattern);
+      //Pd.send(instrumentId + 'rhythm', [customPattern.join(' ')]);
+      //console.log('rl' + i);
+      //console.log(customPattern[i]);
+      //Pd.send('rl1', [1]);
+      //Pd.send('')
     })
   });
 }
@@ -343,6 +354,6 @@ $(function() {
   setupKeyboardChoice();
   setupNameInput(socket);
   setupPatternChoice();
-  setupCustomPattern('l');
-  setupCustomPattern('b');
+  //setupCustomPattern('l');
+  //setupCustomPattern('b');
 });

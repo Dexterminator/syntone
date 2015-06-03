@@ -86,6 +86,10 @@ function initRoomState(room) {
     roomState.lead[param] = 0;
   });
 
+  roomState.lead.lp1 = 50;
+  roomState.lead.lp2 = 0;
+  roomState.lead.lp3 = 50;
+
   _.forEach(bassParams, function (param) {
     roomState.bass[param] = 0;
   });

@@ -101,3 +101,9 @@
     transition: none;
     background: #676667;
 }
+
+.param-slider {
+    margin-top: 4px;
+    float: right;
+    width: 88%;
+}

@@ -194,7 +194,7 @@ function setKeyBoardEvents(socket) {
   });
 }
 
-function setupRadios() {
+function setupKeyboardChoice() {
   $('#radios').popover('show');
   $('#lead-choice').click(function () {
     mapKeyboard('l')
@@ -218,6 +218,30 @@ function setupNameInput(socket) {
     }));
     changed.html(nameInfo.name);
   });
+}
+
+function setupPatternChoice() {
+  var patterns = [
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0],
+    [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
+  ];
+
+  var leadPatternRadios = $('#lpattern-choice input');
+  leadPatternRadios.on('change', function() {
+    var patternIndex = $("input[name='lead-pattern-choice']:checked").val();
+    console.log(patterns[patternIndex]);
+    Pd.send('lrhythm', patterns[patternIndex]);
+  });
+
+  var bassPatternRadios = $('#bpattern-choice input');
+  bassPatternRadios.on('change', function() {
+    var patternIndex = $("input[name='bass-pattern-choice']:checked").val();
+    console.log(patterns[patternIndex]);
+    Pd.send('brhythm', patterns[patternIndex]);
+  });
+  Pd.send('brhythm', patterns[0]);
+  Pd.send('lrhythm', patterns[0]);
 }
 
 $(function() {
@@ -245,6 +269,7 @@ $(function() {
   setUpKeyboard('l', 24, socket);
   setUpKeyboard('b', 24, socket);
   mapKeyboard('l');
-  setupRadios();
+  setupKeyboardChoice();
   setupNameInput(socket);
+  setupPatternChoice();
 });

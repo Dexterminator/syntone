@@ -94,6 +94,10 @@ function initRoomState(room) {
     roomState.bass[param] = 0;
   });
 
+  roomState.bass.bp1 = 50;
+  roomState.bass.bp2 = 0;
+  roomState.bass.bp3 = 50;
+
   _.forEach(drumsParams, function (param) {
     roomState.drums[param] = 0;
   });

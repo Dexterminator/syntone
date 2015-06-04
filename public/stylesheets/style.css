@@ -164,8 +164,7 @@ body {
 }
 
 .static-popover .popover {
-    position: relative;
+    position: absolute;
     display: block;
-    margin-bottom: 10px;
-    bottom: 20px;
+    top: -4px;
 }

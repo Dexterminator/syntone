@@ -3,6 +3,43 @@
     float: left;
 }
 
+body {
+    background-color: #19B0B4;
+    color: #0A4647;
+}
+
+#lp1 .ui-slider-range { 
+    background: #0A4647; 
+}
+
+#bp1 .ui-slider-range { 
+    background: #0A4647; 
+}
+
+#lp2 .ui-slider-range { 
+    background: #D1589D; 
+}
+
+#bp2 .ui-slider-range { 
+    background: #D1589D; 
+}
+
+#lp3 .ui-slider-range { 
+    background: #EC7281; 
+}
+
+#bp3 .ui-slider-range { 
+    background: #EC7281; 
+}
+
+#lp4 .ui-slider-range { 
+    background: #FC964D; 
+}
+
+#bp4 .ui-slider-range { 
+    background: #FC964D; 
+}
+
 .info-area {
     margin-top: 20px;
     float: right;
@@ -56,7 +93,7 @@
     z-index: 50;
     width: 31px;
     height: 125px;
-    background: #262524;
+    background: #556D7F;
     border-radius: 5px;
     position: absolute;
     left: 49px;
@@ -65,17 +102,17 @@
 
 .blackKey:hover {
     transition: background 0.2s;
-    background-color: #5b5656;
+    background-color: #33414C;
 }
 
 .black-active-key {
     transition: none;
-    background-color: #aea1a1;
+    background-color: #222B32;
 }
 
 .black-active-key:hover {
     transition: none;
-    background-color: #aea1a1;
+    background-color: #222B32;
 }
 
 .whiteKey {
@@ -84,22 +121,22 @@
     border-radius: 5px;
     margin: 10px;
     border: 1px #ccd0be solid;
-    background-color: #FAFFE9;
+    background-color: #FFF2DE;
 }
 
 .whiteKey:hover {
     transition: background 0.2s;
-    background: #9e9d9e;
+    background: #E5D9C7;
 }
 
 .white-active-key {
     transition: none;
-    background: #676667;
+    background: #CCC1B1;
 }
 
 .white-active-key:hover {
     transition: none;
-    background: #676667;
+    background: #CCC1B1;
 }
 
 .param-slider {

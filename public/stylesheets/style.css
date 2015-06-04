@@ -8,6 +8,11 @@ body {
     color: #0A4647;
 }
 
+.ui-widget-content {
+    background: #178286;
+    border: none;
+}
+
 #lp1 .ui-slider-range { 
     background: #0A4647; 
 }
@@ -174,8 +179,7 @@ body {
 }
 
 .static-popover .popover {
-    position: relative;
+    position: absolute;
     display: block;
-    margin-bottom: 10px;
-    bottom: 20px;
+    top: -4px;
 }

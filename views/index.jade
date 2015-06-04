@@ -12,8 +12,7 @@ block content
         h3 Band members
         ul#band-members
     .row
-      .col-md-2#radios(data-toggle='tooltip', data-trigger='click|hover|focus', data-content='Use ' +
-      'A, W, S, E, D, F, T, G, Y, H, U, J, K, O, L, and P to play notes on the keyboard. Q to switch instrument.')
+      .col-md-2
         .radio
           label
             input#lead-choice(type='radio', name='keymap-choice', checked='true')
@@ -22,7 +21,13 @@ block content
           label
             input#bass-choice(type='radio', name='keymap-choice')
             span Map keyboard to bass
-      .col-md-3.col-md-offset-3
+      .col-md-3
+        .static-popover
+          .popover.right
+            .arrow
+            .popover-content
+              p Use A, W, S, E, D, F, T, G, Y, H, U, J, K, O, L, and P to play notes on the keyboard. Q to switch instrument.
+      .col-md-3
         input.form-control#name-input(type='text', placeholder='Name', maxlength='18')
         a.btn.btn-primary#name-submit Submit name
     .row

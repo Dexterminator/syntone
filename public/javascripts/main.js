@@ -1,8 +1,8 @@
 var leadCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var bassCustomPattern = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 var leadPatterns = [
-  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 1],
+  [1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0],
   [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 0]
 ];
 var bassPatterns = [
@@ -289,9 +289,18 @@ function setupBassPatternRadios() {
   });
 }
 
+function setupDrumPatternRadios() {
+  var drumPatternRadios = $('#dpattern-choice input');
+  drumPatternRadios.on('change', function () {
+    var val = $("input[name='drums-pattern-choice']:checked").val();
+    Pd.send('drhythm', [parseFloat(val)]);
+  });
+}
+
 function setupPatternChoice() {
   setupLeadPatternRadios();
   setupBassPatternRadios();
+  setupDrumPatternRadios();
 
   _.forEach(leadPatterns[0], function (elem, index) {
     Pd.send('rl' + (index + 1), [elem]);

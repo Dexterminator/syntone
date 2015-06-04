@@ -338,6 +338,14 @@ function setupMasterVolume() {
     Pd.send('mvol', [parseFloat(ui.value / 100)]);
   });
 }
+function setupContiuousToggle(instrumentId) {
+  var checkBox = $('#' + instrumentId + 'continuous').find('input');
+
+  checkBox.click(function () {
+    Pd.send(instrumentId + 'con', [checkBox.is(':checked') ? 1 : 0]);
+  });
+}
+
 $(function() {
   var bandMemberColors = ['#00A0B0', '#CC333F', '#EDC951'];
   var paramSliders = [
@@ -369,4 +377,6 @@ $(function() {
   setupCustomPattern('b');
   $('#name-input').focus();
   setupMasterVolume();
+  setupContiuousToggle('l');
+  setupContiuousToggle('b');
 });

@@ -1,11 +1,12 @@
+h3 Drums
 #dpattern-choice
-  h3 Drums
-  label.radio-inline
-    input(type='radio', name='drums-pattern-choice', checked='true', value='1')
-    span Pattern 1
-  label.radio-inline
-    input(type='radio', name='drums-pattern-choice', value='2')
-    span Pattern 2
-  label.radio-inline
-    input(type='radio', name='drums-pattern-choice', value='3')
-    span Pattern 3
+  .btn-group(data-toggle='buttons')
+    label.btn.btn-primary.active
+      input(type='radio', name='drums-pattern-choice', checked='true', value='1')
+      span Pattern 1
+    label.btn.btn-primary
+      input(type='radio', name='drums-pattern-choice', value='2')
+      span Pattern 2
+    label.btn.btn-primary
+      input(type='radio', name='drums-pattern-choice', value='3')
+      span Pattern 3

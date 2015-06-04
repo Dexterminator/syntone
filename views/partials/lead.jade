@@ -59,18 +59,19 @@
         input(type='checkbox', checked='true')
         span Continuous
     #lpattern-choice
-      label.radio-inline
-        input(type='radio', name='lead-pattern-choice', checked='true', value='0')
-        span Pattern 1
-      label.radio-inline
-        input(type='radio', name='lead-pattern-choice', value='1')
-        span Pattern 2
-      label.radio-inline
-        input(type='radio', name='lead-pattern-choice', value='2')
-        span Pattern 3
-      label.radio-inline
-        input#l-custom-pattern(type='radio', name='lead-pattern-choice', value='custom')
-        span Custom
+      .btn-group(data-toggle='buttons')
+        label.btn.btn-primary.active
+          input(type='radio', name='lead-pattern-choice', checked='true', value='0')
+          span Pattern 1
+        label.btn.btn-primary
+          input(type='radio', name='lead-pattern-choice', value='1')
+          span Pattern 2
+        label.btn.btn-primary
+          input(type='radio', name='lead-pattern-choice', value='2')
+          span Pattern 3
+        label.btn.btn-primary
+          input#l-custom-pattern(type='radio', name='lead-pattern-choice', value='custom')
+          span Custom
 
     #l-pattern-buttons
       button.btn.btn-xs.pattern-button.disabled x

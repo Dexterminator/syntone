@@ -8,6 +8,11 @@ body {
     color: #0A4647;
 }
 
+.ui-widget-content {
+    background: #178286;
+    border: none;
+}
+
 #lp1 .ui-slider-range { 
     background: #0A4647; 
 }

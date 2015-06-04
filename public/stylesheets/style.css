@@ -162,3 +162,10 @@ body {
 .authors {
     font-size: 12px;
 }
+
+.static-popover .popover {
+    position: relative;
+    display: block;
+    margin-bottom: 10px;
+    bottom: 20px;
+}

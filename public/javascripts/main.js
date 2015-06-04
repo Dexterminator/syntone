@@ -214,7 +214,6 @@ function setKeyBoardEvents(socket) {
 }
 
 function setupKeyboardChoice() {
-  $('#radios').popover('show');
   $('#lead-choice').click(function () {
     mapKeyboard('l')
   });

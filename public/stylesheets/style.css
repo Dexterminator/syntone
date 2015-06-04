@@ -8,6 +8,16 @@ body {
     color: #0A4647;
 }
 
+.btn-primary {
+    background-color: #0A4647;
+    border-color: #0A4647;
+}
+
+.btn-primary :hover {
+    background-color: #419293;
+    border-color: #419293;
+}
+
 .ui-widget-content {
     background: #178286;
     border: none;
@@ -52,7 +62,7 @@ body {
 
 .custom-handle {
     border: white;
-    fill: #036564;
+    fill: #E8DDCB;
 }
 
 .info-area {

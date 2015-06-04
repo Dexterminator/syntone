@@ -357,7 +357,7 @@ function setupContiuousToggle(instrumentId) {
 }
 
 $(function() {
-  var bandMemberColors = ['#FDDFBD', '#CC333F', '#EDC951'];
+  var bandMemberColors = ['#D1589D', '#EC7281', '#FC964D'];
   var paramSliders = [
     {param: 'lp1', min: 0, max: 127},
     {param: 'lp2', min: 0, max: 127},

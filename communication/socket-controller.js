@@ -3,7 +3,7 @@ var _ = require('lodash');
 var connected = 0;
 var rooms = ['0'];
 var roomIdCounter = 0;
-var SOCKETS_PER_ROOM = 3;
+var SOCKETS_PER_ROOM = 10;
 var leadParams = [
   'lp1', 'lp2', 'lp3', 'lp4',
   'lp5', 'lp6', 'lp7', 'lp8'

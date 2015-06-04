@@ -30,6 +30,12 @@ module.exports.init = function(io) {
     setParameterCallbacks(socket, roomState, 'drums', drumsParams);
     setKeyboardCallbacks(socket);
     setRoomConnectionEvents(io, room, socket);
+    socket.on('pattern-changed', function (message) {
+      socket.to(socket.room).emit('pattern-changed', message);
+    });
+    socket.on('custom-pattern-changed', function (message) {
+      socket.to(socket.room).emit('custom-pattern-changed', message);
+    });
   });
 };
 

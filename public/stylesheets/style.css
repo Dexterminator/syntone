@@ -40,6 +40,16 @@ body {
     background: #FC964D; 
 }
 
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    background: none;
+    border: none;
+}
+
+.custom-handle {
+    border: white;
+    fill: #036564;
+}
+
 .info-area {
     margin-top: 20px;
     float: right;

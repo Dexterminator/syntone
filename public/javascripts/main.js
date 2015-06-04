@@ -35,6 +35,7 @@ function loadPdPatch() {
 
 function initSlider(paramSlider) {
   var slider = $('#' + paramSlider.param);
+  slider.append('<div class="custom-handle ui-slider-handle"><svg height="20" width="20"><circle class="custom-handle" cx=10 cy=10 r=10 /></svg></div>');
   slider.slider({
     orientation: "horizontal",
     range: 'min',
@@ -335,6 +336,7 @@ function setupCustomPattern(instrumentId) {
 
 function setupMasterVolume() {
   var slider = $('#master-volume');
+  slider.append('<div class="ui-slider-handle"><svg height="20" width="20"><circle class="custom-handle" cx=10 cy=10 r=10 /></svg></div>');
   slider.slider({
     orientation: "horizontal",
     range: 'min',

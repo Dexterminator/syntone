@@ -360,6 +360,35 @@ function setupContiuousToggle(instrumentId) {
   });
 }
 
+function setChangedPatternEvents(socket) {
+  socket.on('pattern-changed', function (message) {
+    if (message.index === 'custom') {
+      var patternButton = $('#' + message.instrument + 'pattern-choice').find('.btn-group').children().get(3);
+    } else {
+      var patternButton = $('#' + message.instrument + 'pattern-choice').find('.btn-group').children().get(message.index);
+    }
+    patternButton.click();
+  });
+
+  socket.on('custom-pattern-changed', function (message) {
+    var buttonsId = '#' + message.instrument + '-pattern-buttons';
+
+    if (message.instrument === 'l') {
+      leadCustomPattern = message.pattern;
+    } else if (message.instrument === 'b') {
+      bassCustomPattern = message.pattern;
+    }
+
+    $(buttonsId).find('.pattern-button').each(function (i, button) {
+      $(this).html(iconLookup[message.pattern[i]]);
+    });
+
+    _.forEach(message.pattern, function (elem, index) {
+      Pd.send('r' + message.instrument + (index + 1), [elem]);
+    });
+  });
+}
+
 $(function() {
   var bandMemberColors = ['#D1589D', '#EC7281', '#FC964D'];
   var paramSliders = [
@@ -387,26 +416,11 @@ $(function() {
   setupKeyboardChoice();
   setupNameInput(socket);
   setupPatternChoice(socket);
-  setupCustomPattern('l');
-  setupCustomPattern('b');
+  setupCustomPattern('l', socket);
+  setupCustomPattern('b', socket);
   $('#name-input').focus();
   setupMasterVolume();
   setupContiuousToggle('l');
   setupContiuousToggle('b');
-  socket.on('pattern-changed', function (message) {
-    if (message.index === 'custom') {
-      var patternButton = $('#' + message.instrument + 'pattern-choice').find('.btn-group').children().get(3);
-    } else {
-      var patternButton = $('#' + message.instrument + 'pattern-choice').find('.btn-group').children().get(message.index);
-    }
-    patternButton.click();
-    console.log(patternButton);
-  });
-  //socket.on('custom-pattern-changed', function (message) {
-  //  if (message.instrument === 'l') {
-  //    leadCustomPattern = message.pattern;
-  //  } else if (message.instrument === 'b') {
-  //    bassCustomPattern = message.pattern;
-  //  }
-  //});
+  setChangedPatternEvents(socket);
 });
